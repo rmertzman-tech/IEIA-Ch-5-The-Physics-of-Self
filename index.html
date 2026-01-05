@@ -1,295 +1,1539 @@
-<!DOCTYPE html><html lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836"></script><script type="text/javascript">
-					function OptanonWrapper() { }
-				</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unity - Manual:  Unity User Manual 2021.3 (LTS)</title>
-<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
-<meta name="author" content="Unity Technologies">
-<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
-<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
-<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
-<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
-<meta name="msapplication-TileColor" content="#222c37">
-<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
-<script type="text/javascript" src="https://docs.unity3d.com/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20220709"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20220709"></script><script type="text/javascript" src="docdata/toc.js?ts=20220709"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20220709"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20220709">
-<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
-<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
-<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Physics of the Self: Interactive Learning Module</title>
+    <style>
+        :root {
+            --primary: #2c5282;
+            --secondary: #4299e1;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --purple: #805ad5;
+            --teal: #319795;
+            --background: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--success));
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .module {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        .module h3 {
+            color: var(--primary);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .learning-objective {
+            background: #ebf8ff;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .reading-connection {
+            background: #fef5e7;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .reading-connection::before {
+            content: "📖 Reading Connection: ";
+            font-weight: bold;
+            color: var(--warning);
+        }
+
+        .key-concept {
+            background: #e6fffa;
+            border-left: 4px solid var(--teal);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .key-concept-title {
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 8px;
+        }
+
+        .interactive-section {
+            background: #f7fafc;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* Entropy Visualizer */
+        .entropy-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .entropy-state {
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 3px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entropy-state.order {
+            background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+        }
+
+        .entropy-state.chaos {
+            background: linear-gradient(135deg, #fed7d7, #fbb6ce);
+        }
+
+        .entropy-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .particles-container {
+            position: relative;
+            height: 150px;
+            margin: 15px 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .particle.ordered {
+            transition: all 0.5s;
+        }
+
+        .particle.chaotic {
+            animation: float-random 2s infinite;
+        }
+
+        @keyframes float-random {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(20px, -15px); }
+            50% { transform: translate(-15px, 20px); }
+            75% { transform: translate(15px, 15px); }
+        }
+
+        /* BROA+ Repair Simulator */
+        .repair-choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .repair-choice {
+            padding: 25px;
+            border-radius: 12px;
+            border: 3px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .repair-choice:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .repair-choice.good {
+            background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+        }
+
+        .repair-choice.bad {
+            background: linear-gradient(135deg, #fed7d7, #fbb6ce);
+        }
+
+        .coherence-meter {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .meter-bar {
+            width: 100%;
+            height: 40px;
+            background: var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .meter-fill {
+            height: 100%;
+            transition: width 0.5s ease, background 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* CIB Builder */
+        .cib-builder {
+            margin: 20px 0;
+        }
+
+        .temporal-layers {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .layer-input {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+        }
+
+        .layer-input label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .layer-input input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .layer-input input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .cib-visualization {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 3px solid var(--primary);
+        }
+
+        .cib-layer {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* Holographic Screen */
+        .screen-demo {
+            margin: 20px 0;
+        }
+
+        .perception-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .perception-view {
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid var(--border);
+            min-height: 250px;
+        }
+
+        .perception-view h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .signal-item {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            background: #c6f6d5;
+            border-left: 3px solid var(--success);
+        }
+
+        .noise-blur {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            background: #e2e8f0;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Identity Kernel Builder */
+        .kernel-layers {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .kernel-layer {
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid var(--border);
+            background: white;
+        }
+
+        .kernel-layer.ethical {
+            border-color: var(--purple);
+            background: #faf5ff;
+        }
+
+        .kernel-layer.social {
+            border-color: var(--teal);
+            background: #e6fffa;
+        }
+
+        .kernel-layer.somatic {
+            border-color: var(--warning);
+            background: #fef5e7;
+        }
+
+        .kernel-layer h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .cib-chip {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            background: white;
+            border: 2px solid var(--border);
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cib-chip:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .cib-chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Moral Injury Demo */
+        .moral-injury-demo {
+            margin: 20px 0;
+        }
+
+        .cib-integrity {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .cib-intact {
+            background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+            border: 3px solid var(--success);
+        }
+
+        .cib-cracking {
+            background: linear-gradient(135deg, #fef5e7, #fed7d7);
+            border: 3px solid var(--warning);
+        }
+
+        .cib-shattered {
+            background: linear-gradient(135deg, #fed7d7, #fbb6ce);
+            border: 3px solid var(--danger);
+        }
+
+        .stress-meter {
+            margin: 15px 0;
+        }
+
+        .stress-bar {
+            width: 100%;
+            height: 30px;
+            background: var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .stress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* PRF Comparator */
+        .prf-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .prf-card {
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid var(--border);
+            background: white;
+        }
+
+        .prf-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .same-function {
+            background: #e6fffa;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid var(--teal);
+        }
+
+        .different-frame {
+            background: #faf5ff;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid var(--purple);
+        }
+
+        /* Buttons */
+        button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        button:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.primary { background: var(--primary); }
+        button.success { background: var(--success); }
+        button.danger { background: var(--danger); }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .checkpoint {
+            background: #fff5f5;
+            border: 2px solid var(--danger);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checkpoint-title {
+            font-weight: bold;
+            color: var(--danger);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .question {
+            background: #f0fff4;
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: var(--secondary);
+            background: #ebf8ff;
+        }
+
+        .option input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #c6f6d5;
+            border: 2px solid var(--success);
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #fed7d7;
+            border: 2px solid var(--danger);
+            display: block;
+        }
+
+        .completed-module {
+            background: #c6f6d5;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+
+        .skip-info {
+            background: #fef5e7;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--warning);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            header h1 { font-size: 1.5em; }
+            .module { padding: 20px; }
+            .entropy-container,
+            .repair-choices,
+            .perception-comparison { grid-template-columns: 1fr; }
+        }
+
+        :focus {
+            outline: 3px solid var(--secondary);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        @media (prefers-contrast: high) {
+            :root { --border: #000000; }
+            button { border: 2px solid currentColor; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5V25JL6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
-<div class="header-wrapper">
-<div id="header" class="header"><div class="content">
-<div class="spacer"><div class="menu">
-<div id="nav-open" for="nav-input"><span></span></div>
-<div class="logo"><a href="https://docs.unity3d.com"></a></div>
-<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
-<input type="text" name="q" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
-</form></div>
-<ul>
-<li><a href="../Manual/index.html" class="selected">Manual</a></li>
-<li><a href="../ScriptReference/index.html">Scripting API</a></li>
-</ul>
-</div></div>
-<div class="more">
-<div class="filler"></div>
-<ul><li><a href="https://unity.com/">unity3d.com</a></li></ul>
-</div>
-</div></div>
-<div class="toolbar"><div class="content">
-<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
-                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
-<ul id="OtherVersionsContentUl"></ul>
-<div id="otherVersionsLegend"><ul>
-<li>
-<div id="supportedColour" class="legendBox"></div>Supported</li>
-<li>
-<div id="notFoundColour" class="legendBox"></div>Legacy</li>
-</ul></div>
-</div>
-<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
-</div>
-<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
-<div class="lbl">Language
-:                <span class="b">English</span>
-</div>
-<div class="arrow"></div>
-<div class="lang-list" style="display:none;"><ul>
-<li><a href="/Manual/UnityManual.html">English</a></li>
-<li><a href="/cn/current/Manual/UnityManual.html">中文</a></li>
-<li><a href="/ja/current/Manual/UnityManual.html">日本語</a></li>
-<li><a href="/es/current/Manual/UnityManual.html">Español</a></li>
-<li><a href="/kr/current/Manual/UnityManual.html">한국어</a></li>
-<li><a href="/ru/current/Manual/UnityManual.html">Русский</a></li>
-</ul></div>
-</div></div>
-</div></div>
-<div class="mobileLogo"><a href="https://docs.unity3d.com"></a></div>
-</div>
-<div id="master-wrapper" class="master-wrapper clear">
-<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
-<h2>Unity Manual</h2>
-<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
-<input type="text" name="q" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
-</form></div>
-<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
-<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
-<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
-<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
-</div></form></div>
-<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
-<div class="lbl">Language
-:                <span class="b">English</span>
-</div>
-<div class="arrow"></div>
-<div class="lang-list" style="display:none;"><ul>
-<li><a href="/Manual/UnityManual.html">English</a></li>
-<li><a href="/cn/current/Manual/UnityManual.html">中文</a></li>
-<li><a href="/ja/current/Manual/UnityManual.html">日本語</a></li>
-<li><a href="/es/current/Manual/UnityManual.html">Español</a></li>
-<li><a href="/kr/current/Manual/UnityManual.html">한국어</a></li>
-<li><a href="/ru/current/Manual/UnityManual.html">Русский</a></li>
-</ul></div>
-</div></div>
-</div></div></div></div></div>
-<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
-<div class="section">
-<div class="breadcrumbs clear"><ul><li> Unity User Manual 2021.3 (LTS)</li></ul></div>
-<div class="mb20"><div class="nextprev clear">
-<div class="icon tt left mr1" data-distance="-40|-30|top">
-<span class="prev"><a href="UnityManual.html"></a></span><div class="tip"> Unity User Manual 2021.3 (LTS)</div>
-</div>
-<div class="icon tt right" data-distance="-40|-30|top">
-<span class="next"><a href="UnityManual.html"></a></span><div class="tip"> Unity User Manual 2021.3 (LTS)</div>
-</div>
-</div></div>
-<div id="_leavefeedback"></div>
-<h1>Unity User Manual 2021.3 (LTS)</h1>
-<!--BeginSwitchLink--><!--EndSwitchLink-->
-<div class="clear"></div>
+    <div class="container">
+        <header role="banner">
+            <h1>The Physics of the Self</h1>
+            <p>The Ontology of Agency & The Coherent Information Bit</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Class 5: Interactive Learning Module • 60-75 Minutes</p>
+        </header>
 
-<p>Use the Unity Editor to create 2D and 3D games, apps and experiences. Download the Editor at <a href="https://unity3d.com/unity">unity3d.com</a>.</p>
+        <div class="progress-container" role="region" aria-label="Learning progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div id="completedModules" aria-live="polite"></div>
+        </div>
 
-<p>The Unity User Manual helps you learn how to use the Unity Editor and its associated services. You can read it from start to finish, or use it as a reference.</p>
+        <!-- Module 0: Introduction -->
+        <section class="module active" id="module0" role="region" aria-labelledby="module0-title">
+            <h2 id="module0-title">Introduction: From History to Physics</h2>
+            
+            <div class="skip-info" role="note">
+                <strong>📚 Building on Previous Classes:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li><strong>Class 1:</strong> Ethical Telescope - systems create outcomes</li>
+                    <li><strong>Class 2:</strong> Biological hardware - brain as metabolic machine</li>
+                    <li><strong>Class 3:</strong> Social software - Stag Hunt, trust, cooperation</li>
+                    <li><strong>Class 4:</strong> Operating systems - Confucius, Epicurus, WEIRD</li>
+                    <li><strong>Class 5:</strong> The Physics - who is the "I" that chooses?</li>
+                </ul>
+            </div>
 
-<p>If it’s your first time using Unity, take a look at the introductory documentation on <a href="UnityOverview.html">Working with Unity</a>, and see the <a href="https://unity3d.com/learn/tutorials">Unity Tutorials</a>.</p>
-<div class="frontpage-topsection">
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Understand that the "Self" is not a static object but a thermodynamic process—a BROA+ (Biocognitive Repair-Oriented Agent) built from CIBs (Coherent Information Bits) that must constantly fight entropy to maintain coherence.
+            </div>
 
-<p><strong>New</strong></p>
+            <p>Classes 1-4 explored the <strong>how</strong> of ethical behavior. Now we ask: <strong>Who is the user?</strong></p>
 
-<ul>
-<li>Features introduced in 2021.3: <a href="WhatsNew2021LTS.html">What’s New</a>
-</li>
-<li>Upgrading Unity projects from older versions of Unity: <a href="UpgradeGuide2021LTS.html">Upgrade Guide</a>
-</li>
-</ul>
-</div>
-<div class="frontpage-topsection">
+            <p>When you say "I choose to be ethical," what is the "I" that is choosing? We often imagine the Self as a solid object—a captain steering the ship. But if we zoom in past biology into <strong>information physics</strong>, a different picture emerges.</p>
 
-<p><strong>Packages</strong></p>
+            <div class="key-concept">
+                <div class="key-concept-title">The Revolutionary Insight</div>
+                The human self is not a static <strong>thing</strong>. It's a <strong>thermodynamic process</strong>—a temporary pocket of order in a chaotic universe, constantly fighting entropy to maintain coherence. You are not a noun; you are a <strong>verb</strong>.
+            </div>
 
-<ul>
-<li>Learn about packages: <a href="Packages.html">Working with the Package Manager</a>
-</li>
-<li>Find documentation for a specific package: <span class="tooltip"><a href="pack-safe.html">Verified packages</a><span class="tooltiptext">When a package passes release cycle testing for a specific version of Unity, it receives the <em>Verified For</em> designation. This means that these packages are guaranteed to work with the designated version of Unity.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Verifiedpackage">Glossary</a></span></span></span> and <span class="tooltip"><a href="pack-preview.html">Preview packages</a><span class="tooltiptext">A <em>preview</em> package is in development and not yet ready for production. A package in preview might be at any stage of development, from the initial stages to near completion.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Previewpackage">Glossary</a></span></span></span></li>
-<li>Learn how to build a custom package: <a href="CustomPackages.html">Creating custom packages</a>
-</li>
-</ul>
-</div>
-<div class="clear"></div>
-<div class="frontpage-divider"></div>
+            <h3>Three Core Discoveries</h3>
 
-<h3>Unity User Manual sections</h3>
-<div class="frontpage-section">
-<a href="UnityOverview.html"><img src="../uploads/Main/StructEditor.jpg" alt="Main.UnityOverview"></a>
+            <ol style="line-height: 1.8; margin: 20px 0 20px 30px;">
+                <li><strong>BROA+ Model</strong> - You are a Biocognitive Repair-Oriented Agent</li>
+                <li><strong>CIB (Coherent Information Bit)</strong> - The fundamental unit of your agency</li>
+                <li><strong>The Holographic Screen</strong> - You can only "see" what you have CIBs for</li>
+            </ol>
 
-<h3><a href="UnityOverview.html">Working in Unity</a></h3>
+            <p>This framework explains why <strong>"changing your mind" is literally a metabolic event</strong>—and why ethical development requires actual physical energy (glucose) to maintain.</p>
 
-<p>A complete introduction to the Unity Editor.</p>
-</div>
-<div class="frontpage-section">
-<a href="Unity2D.html"><img src="../uploads/Main/struct2d.jpg" alt="Main.Unity2D"></a>
+            <div class="reading-connection">
+                Review the Introduction (page 1) for how this builds from Levin's agential materials and Sapolsky's metabolic costs into information physics.
+            </div>
 
-<h3><a href="Unity2D.html">Unity 2D</a></h3>
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Check Your Understanding</div>
+                <p><strong>Before continuing:</strong> What does it mean to say the Self is a "process" not a "thing"? Why is this important for ethics?</p>
+                <textarea id="checkpoint0" aria-label="Your response" placeholder="Type your reflection here..."></textarea>
+            </div>
 
-<p>All of the Unity Editor’s 2D-specific features including gameplay, <span class="tooltip"><strong>sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite">Glossary</a></span></span></span> and physics.</p>
-</div>
-<div class="frontpage-section">
-<a href="Graphics.html"><img src="../uploads/Main/StructGraphics.jpg" alt="Main.Graphics"></a>
+            <div class="navigation">
+                <button disabled>← Previous</button>
+                <button onclick="nextModule()" class="primary">Next: Entropy Fighters →</button>
+            </div>
+        </section>
 
-<h3><a href="Graphics.html">Graphics</a></h3>
+        <!-- Module 1: BROA+ and Entropy -->
+        <section class="module" id="module1" role="region" aria-labelledby="module1-title">
+            <h2 id="module1-title">Part I: The BROA+ Model - Entropy Fighters</h2>
+            
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Understand the Second Law of Thermodynamics and how you are a BROA+ (Biocognitive Repair-Oriented Agent) whose primary drive is fighting entropy through constant self-repair.
+            </div>
 
-<p>The visual aspects of the Unity Editor including <span class="tooltip"><strong>cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera">Glossary</a></span></span></span> and lighting.</p>
-</div>
-<div class="frontpage-section">
-<a href="PhysicsSection.html"><img src="../uploads/Main/StructPhysics.jpg" alt="Main.PhysicsSection"></a>
+            <h3>The Second Law of Thermodynamics</h3>
 
-<h3><a href="PhysicsSection.html">Physics</a></h3>
+            <p>The universe tends toward <strong>entropy</strong> (disorder). In a closed system, energy dissipates, structures degrade, information dissolves into noise. A hot cup of coffee always cools down—it never spontaneously heats up.</p>
 
-<p>Simulation of 3D motion, mass, gravity and <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision">Glossary</a></span></span></span>.</p>
-</div>
-<div class="frontpage-section">
-<a href="UNet.html"><img src="../uploads/Main/StructUNet.png" alt="Main.UNet"></a>
+            <div class="interactive-section entropy-container" role="application" aria-label="Entropy demonstration">
+                <div class="entropy-state order">
+                    <div class="entropy-icon">🔷</div>
+                    <h4>ORDER (Low Entropy)</h4>
+                    <div class="particles-container" id="orderedParticles"></div>
+                    <p style="margin-top: 10px;"><strong>High Energy Required</strong></p>
+                    <p style="font-size: 0.9em;">Structures stay organized. Complex patterns persist. Information coherent.</p>
+                </div>
 
-<h3><a href="UNet.html">Networking</a></h3>
+                <div class="entropy-state chaos">
+                    <div class="entropy-icon">💥</div>
+                    <h4>CHAOS (High Entropy)</h4>
+                    <div class="particles-container" id="chaoticParticles"></div>
+                    <p style="margin-top: 10px;"><strong>Natural State (Default)</strong></p>
+                    <p style="font-size: 0.9em;">Structures dissolve. Patterns randomize. Information becomes noise.</p>
+                </div>
+            </div>
 
-<p>How to implement Multiplayer and networking.</p>
-</div>
-<div class="frontpage-section">
-<a href="ScriptingSection.html"><img src="../uploads/Main/StructScripting.jpg" alt="Main.ScriptingSection"></a>
+            <div class="key-concept">
+                <div class="key-concept-title">You Are a Thermodynamic Anomaly</div>
+                Living things are temporary pockets of order in a chaotic universe. To stay ordered—to simply <em>exist</em>—you must constantly consume energy and information. This is not passive; it's an active, relentless war against dissolution.
+            </div>
 
-<h3><a href="ScriptingSection.html">Scripting</a></h3>
+            <h3>The BROA+ Model</h3>
 
-<p>Programming your games by using scripting in the Unity Editor.</p>
-</div>
-<div class="frontpage-section">
-<a href="Audio.html"><img src="../uploads/Main/StructAudio.jpg" alt="Main.Audio"></a>
+            <p>We redefine the human agent as a <strong>BROA+ (Biocognitive Repair-Oriented Agent)</strong>:</p>
 
-<h3><a href="Audio.html">Audio</a></h3>
+            <ul style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                <li><strong>Biocognitive:</strong> Biological hardware (cells, neurons) running cognitive software (beliefs, memories). Mental states are inextricably linked to metabolic states.</li>
+                <li><strong>Repair-Oriented:</strong> Your primary drive is not happiness or truth—it's <strong>self-repair</strong>. You constantly patch your internal structure to keep it from dissolving.</li>
+                <li><strong>Agent:</strong> You actively strategize against entropy. You don't just suffer dissolution; you fight it.</li>
+            </ul>
 
-<p>Audio in the Unity Editor, including clips, sources, listeners, importing and sound settings.</p>
-</div>
-<div class="frontpage-section">
-<a href="AnimationSection.html"><img src="../uploads/Main/StructAnimation.jpg" alt="Main.AnimationSection"></a>
+            <h3>Interactive: Repair Actions</h3>
 
-<h3><a href="AnimationSection.html">Animation</a></h3>
+            <div class="interactive-section" role="application" aria-label="Repair action simulator">
+                <p><strong>Experience repair actions:</strong> Every choice is an act of maintaining or degrading coherence.</p>
 
-<p>Animation in the Unity Editor.</p>
-</div>
-<div class="frontpage-section">
-<a href="UIToolkits.html"><img src="../uploads/Main/StructUI.jpg" alt="Main.UISystem"></a>
+                <div class="repair-choices">
+                    <div class="repair-choice good" onclick="makeRepairChoice('good')" tabindex="0" role="button">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🥗</div>
+                        <h4>Salad (Repair)</h4>
+                        <p style="font-size: 0.9em; margin-top: 10px;">Complex nutrients, high-quality information. Builds structural integrity. Supports low-entropy state.</p>
+                    </div>
 
-<h3><a href="UIToolkits.html">UI</a></h3>
+                    <div class="repair-choice bad" onclick="makeRepairChoice('bad')" tabindex="0" role="button">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🍩</div>
+                        <h4>Donut (Degradation)</h4>
+                        <p style="font-size: 0.9em; margin-top: 10px;">Simple sugars, low information. Quick energy but contributes to disorder. Accelerates entropy.</p>
+                    </div>
+                </div>
 
-<p>User interface toolkits available in the Unity Editor.</p>
-</div>
-<div class="frontpage-section">
-<a href="Navigation.html"><img src="../uploads/Main/StructNavigation.jpg" alt="Main.Navigation"></a>
+                <div class="coherence-meter">
+                    <h4 style="margin-bottom: 10px;">Your Coherence Level:</h4>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="coherenceFill" style="width: 70%; background: linear-gradient(90deg, #48bb78, #38a169);">70% Coherent</div>
+                    </div>
+                    <p id="coherenceDesc" style="margin-top: 10px; font-size: 0.9em;">Your structure is stable. Keep making repair choices to fight entropy.</p>
+                </div>
+            </div>
 
-<h3><a href="Navigation.html">Navigation</a></h3>
+            <p style="margin-top: 20px;"><strong>Social Repair:</strong> Apologizing to a friend is also a repair action. Your friendship is a low-entropy structure (highly ordered trust). A hurtful comment is an "entropic event" that threatens to dissolve that bond. Apologizing is energy-intensive protocol to restore coherence.</p>
 
-<p>Navigation in the Unity Editor, including AI and pathfinding.</p>
-</div>
-<div class="frontpage-section">
-<a href="UnityServices.html"><img src="../uploads/Main/ServicesSection.png" alt="Main.Services"></a>
+            <div class="reading-connection">
+                Review Part I (pages 1-2) for the full BROA+ model and the imperative of repair against the Second Law.
+            </div>
 
-<h3><a href="UnityServices.html">Unity services</a></h3>
-</div>
-<div class="frontpage-section">
-<a href="VROverview.html"><img src="../uploads/Main/StructVR.jpg" alt="Main.VROverview"></a>
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Check Your Understanding</div>
+                <p>Identify three "repair actions" you did today (biological, social, or cognitive). How did each fight entropy?</p>
+                <textarea id="checkpoint1" aria-label="Your repair actions" placeholder="Describe your repair actions..."></textarea>
+            </div>
 
-<h3><a href="VROverview.html">Virtual reality</a></h3>
-</div>
-<div class="frontpage-section">
-<a href="ContributingToUnity.html"><img src="../uploads/Main/StructContributingToUnity.jpg" alt="Main.ContributingToUnity"></a>
+            <div class="navigation">
+                <button onclick="prevModule()">← Previous</button>
+                <button onclick="nextModule()" class="primary">Next: The CIB →</button>
+            </div>
+        </section>
 
-<h3><a href="ContributingToUnity.html">Contributing to Unity</a></h3>
+        <!-- Module 2: The CIB -->
+        <section class="module" id="module2" role="region" aria-labelledby="module2-title">
+            <h2 id="module2-title">Part II: The Anatomy of the CIB</h2>
+            
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Understand the CIB (Coherent Information Bit) as the fundamental unit of agency—both physically (low-entropy structure requiring energy) and phenomenologically (felt meaning that pulls behavior).
+            </div>
 
-<p>Suggest modifications to some of the Unity Editor’s source code.</p>
-</div>
-<div class="frontpage-section">
-<a href="PlatformSpecific.html"><img src="../uploads/Main/StructPlatformSpecific.jpg" alt="Main.PlatformSpecific"></a>
+            <p>The fundamental unit of the BROA+ is the <strong>CIB (Coherent Information Bit)</strong>. Just as cells are building blocks of biology and atoms are building blocks of matter, <strong>CIBs are the building blocks of Agency</strong>.</p>
 
-<h3><a href="PlatformSpecific.html">Platform specific</a></h3>
+            <h3>Physical Definition</h3>
 
-<p>Information about the platforms that you can build your application for.</p>
-</div>
-<div class="frontpage-section">
-<a href="LegacyTopics.html"><img src="../uploads/Main/StructLegacyTopics.jpg" alt="Main.LegacyTopics"></a>
+            <p>Physically, a CIB is a <strong>low-entropy, high-depth informational structure</strong> that persists through active thermodynamic maintenance. It's a neural network, synaptic pattern, or bio-electric state that resists "decoherence" (breaking apart).</p>
 
-<h3><a href="LegacyTopics.html">Legacy topics</a></h3>
-Useful if you are maintaining legacy projects.
-</div>
-<div class="clear"></div>
+            <div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <h4 style="color: var(--primary); margin-bottom: 10px;">🪱 Levin's Planaria Example</h4>
+                <p>Cut a flatworm in half. The tail regrows the head. How does it "know" what a head looks like? The blueprint is stored in a <strong>bio-electric network</strong>—a voltage pattern across cells. This voltage pattern is a <strong>Somatic CIB</strong>: "I am a worm with one head." Even when the physical head is gone, the CIB remains, guiding repair.</p>
+            </div>
 
-<p><br></p>
+            <div style="background: #fef5e7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <h4 style="color: var(--primary); margin-bottom: 10px;">🧠 Sapolsky's Metabolic Cost</h4>
+                <p>A complex ethical CIB (e.g., "I must not hit this person even though I'm angry") is a <strong>high-energy state</strong>. It requires constant glucose flow to the PFC to suppress the lower-entropy state of the amygdala (aggression). A CIB is not just a "thought"—it's a <strong>metabolic commitment</strong>.</p>
+            </div>
 
-<h3>Further sources of information</h3>
+            <h3>Phenomenological Definition</h3>
 
-<ul>
-<li><p>
-<a href="https://answers.unity3d.com/">Unity Answers</a> or <a href="https://forum.unity3d.com/">Unity Forums</a> - here you can ask questions and search answers.</p></li>
-<li><p>
-<a href="https://support.unity3d.com">The Unity Knowledge Base</a> - a collection of answers to questions posed to Unity’s Support teams.</p></li>
-<li><p>
-<a href="https://unity3d.com/learn/tutorials">Tutorials</a> - step by step video and written guides to using the Unity Editor.</p></li>
-<li><p>
-<a href="https://unityads.unity3d.com/help/index">Unity Ads Knowledge Base</a> - a guide to including ads in your game.</p></li>
-<li><p>
-<a class="tooltipMoreInfoLink" href="https://unity3d.com/asset-store/help">Asset Store help</a> - help on <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore">Glossary</a></span></span></span> content sharing.</p></li>
-</ul>
+            <p>You don't experience values as "bio-electric voltage." You experience them as <strong>Meaning</strong>. Phenomenologically, a CIB is a coherent pattern of lived meaning with felt stability.</p>
 
-<h3>Known issues</h3>
+            <p><strong>A CIB corresponds to:</strong></p>
+            <ul style="margin: 10px 0 10px 30px; line-height: 1.8;">
+                <li>A value that feels binding ("Family comes first")</li>
+                <li>A memory that shapes identity ("The day I graduated")</li>
+                <li>A relationship that structures perception ("My bond with my child")</li>
+                <li>A moral intuition (The "Helper" instinct from Baby Lab)</li>
+                <li>A self-understanding ("I am a teacher," "I am a survivor")</li>
+            </ul>
 
-<p>Is a feature not working as you expect it to? It might be an existing Known Issue. Please check using the <strong>Issue Tracker</strong> at <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>
-<!-- area:none -->
-<div id="_content"></div>
-<div class="nextprev clear">
-<div class="icon tt left mr1" data-distance="-40|-30|top">
-<span class="prev"><a href="UnityManual.html"></a></span><div class="tip"> Unity User Manual 2021.3 (LTS)</div>
-</div>
-<div class="icon tt right" data-distance="-40|-30|top">
-<span class="next"><a href="UnityManual.html"></a></span><div class="tip"> Unity User Manual 2021.3 (LTS)</div>
-</div>
-</div>
-</div>
-<div class="footer-wrapper"><div class="footer clear">
-<div class="copy">Copyright © 2021 Unity Technologies. Publication Date: 2022-07-09.</div>
-<div class="menu">
-<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
-</div>
-</div></div>
-</div></div></div>
-</div>
+            <h3>Build Your Own CIB</h3>
+
+            <div class="interactive-section cib-builder" role="application" aria-label="CIB builder">
+                <p><strong>CIBs have "Temporal Density"—they layer past, present, and future:</strong></p>
+
+                <div class="temporal-layers">
+                    <div class="layer-input">
+                        <label for="pastLayer">🔙 Retained Past (Memory/History):</label>
+                        <input type="text" id="pastLayer" placeholder="e.g., Memory of medical school, years of training" aria-label="Past layer of CIB">
+                    </div>
+
+                    <div class="layer-input">
+                        <label for="presentLayer">⏺️ Experienced Present (Current Attention):</label>
+                        <input type="text" id="presentLayer" placeholder="e.g., Noticing patient's symptoms right now" aria-label="Present layer of CIB">
+                    </div>
+
+                    <div class="layer-input">
+                        <label for="futureLayer">🔜 Projected Future (Commitment/Intention):</label>
+                        <input type="text" id="futureLayer" placeholder="e.g., Commitment to 'Do No Harm' tomorrow" aria-label="Future layer of CIB">
+                    </div>
+                </div>
+
+                <button onclick="buildCIB()" class="success">Build CIB</button>
+
+                <div id="cibVisualization" class="cib-visualization" style="display: none;">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">Your CIB: <span id="cibTitle"></span></h4>
+                    <div class="cib-layer" style="background: #e6f2ff;">
+                        <strong>Past Layer:</strong> <span id="cibPast"></span>
+                    </div>
+                    <div class="cib-layer" style="background: #fff5e6;">
+                        <strong>Present Layer:</strong> <span id="cibPresent"></span>
+                    </div>
+                    <div class="cib-layer" style="background: #e6ffe6;">
+                        <strong>Future Layer:</strong> <span id="cibFuture"></span>
+                    </div>
+                    <p style="margin-top: 15px; font-style: italic;">This CIB is a <strong>metabolic commitment</strong> requiring constant energy to maintain its coherence across time.</p>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-title">Normative Weight</div>
+                A CIB isn't just information—it has <strong>gravity</strong>. It pulls your behavior. A "Loyalty" CIB makes betrayal phenomenologically intolerable. A "Compassion" CIB makes cruelty unthinkable. The CIB carries normative weight.
+            </div>
+
+            <div class="reading-connection">
+                Review Part II (pages 2-4) for the physical and phenomenological anatomy of CIBs, including Henrich's cultural download and temporal density.
+            </div>
+
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Check Your Understanding</div>
+                <p>Identify one of your own CIBs. What is it physically (neural pattern)? What does it feel like (meaning)? How does it pull your behavior?</p>
+                <textarea id="checkpoint2" aria-label="Your CIB analysis" placeholder="Analyze one of your CIBs..."></textarea>
+            </div>
+
+            <div class="navigation">
+                <button onclick="prevModule()">← Previous</button>
+                <button onclick="nextModule()" class="primary">Next: Holographic Screen →</button>
+            </div>
+        </section>
+
+        <!-- Module 3: Holographic Screen -->
+        <section class="module" id="module3" role="region" aria-labelledby="module3-title">
+            <h2 id="module3-title">Part III: The Holographic Screen</h2>
+            
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Understand that you don't see reality directly—your CIBs project a "Holographic Screen" that filters infinite noise into limited signal. You can only "see" what you have CIBs for.
+            </div>
+
+            <p>Now that we understand the unit (CIB), we can understand the interface: <strong>The Holographic Screen</strong> (based on the Markov Blanket from Chris Fields and Karl Friston).</p>
+
+            <h3>Signal vs. Noise</h3>
+
+            <p>The universe floods you with infinite data every second. If you let it all in, your brain would crash. Your Holographic Screen acts as a filter:</p>
+
+            <ul style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                <li><strong>Blocks 99.9%</strong> of the universe as <strong>Noise</strong></li>
+                <li><strong>Allows 0.1%</strong> through as <strong>Signal</strong></li>
+            </ul>
+
+            <div class="key-concept">
+                <div class="key-concept-title">Crucial Insight</div>
+                <strong>The specific CIBs in your Identity Kernel project the Screen.</strong> You can only "see" what you have a CIB for. If you lack the driver (CIB), the signal stays noise.
+            </div>
+
+            <h3>Interactive: The Botanist vs. The Urbanite</h3>
+
+            <div class="interactive-section screen-demo" role="application" aria-label="Holographic screen demonstration">
+                <p><strong>Same forest. Different screens. Different reality.</strong></p>
+
+                <div class="perception-comparison">
+                    <div class="perception-view" style="background: #c6f6d5;">
+                        <h4>🌲 The Botanist</h4>
+                        <p style="font-size: 0.9em; margin-bottom: 15px;"><strong>Has Plant CIBs</strong></p>
+                        <div class="signal-item">🌳 <em>Quercus alba</em> (White Oak) - 150 years old</div>
+                        <div class="signal-item">🍁 <em>Acer saccharum</em> (Sugar Maple) - stressed by drought</div>
+                        <div class="signal-item">🌿 Ecological succession pattern visible</div>
+                        <div class="signal-item">🦋 Monarch butterfly on milkweed (mutualism)</div>
+                        <p style="margin-top: 15px; font-size: 0.9em;"><strong>Sees:</strong> Rich narrative of ecology, relationships, history</p>
+                    </div>
+
+                    <div class="perception-view" style="background: #e2e8f0;">
+                        <h4>🏙️ The Urbanite</h4>
+                        <p style="font-size: 0.9em; margin-bottom: 15px;"><strong>Lacks Plant CIBs</strong></p>
+                        <div class="noise-blur">Green blur... trees?</div>
+                        <div class="noise-blur">More green stuff</div>
+                        <div class="noise-blur">Some kind of leaves</div>
+                        <div class="noise-blur">Bug on plant</div>
+                        <p style="margin-top: 15px; font-size: 0.9em;"><strong>Sees:</strong> Undifferentiated "nature." Cannot resolve signal from noise.</p>
+                    </div>
+                </div>
+
+                <div style="background: #fef5e7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <strong>The Point:</strong> This is not about intelligence or attention. The urbanite is <em>trying</em> to see. But without the CIBs (the perceptual drivers), their screen cannot render the data. The signal stays noise.
+                </div>
+            </div>
+
+            <h3>The Literacy of Ethics</h3>
+
+            <p>This applies directly to morality. An ethical situation (like systemic injustice) is like a text written in a specific language.</p>
+
+            <div style="display: grid; gap: 15px; margin: 20px 0;">
+                <div style="background: #fed7d7; padding: 15px; border-radius: 8px; border-left: 4px solid var(--danger);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">The Ethical Novice</h4>
+                    <p>Lacks CIBs to read the situation. They genuinely believe "nothing happened." They are <strong>ethically illiterate</strong>. Their Holographic Screen cannot render the harm. This is not refusal—it's <strong>inability to render</strong>.</p>
+                </div>
+
+                <div style="background: #c6f6d5; padding: 15px; border-radius: 8px; border-left: 4px solid var(--success);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">The Ethical Expert</h4>
+                    <p>Has high-resolution Identity Kernel loaded with complex CIBs (concepts like "microaggression," "externality," "Stag Hunt"). They see harm clearly because their screen can render signal from noise.</p>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-title">Reframing Ethical Education</div>
+                We're not just teaching rules. We're <strong>installing new drivers</strong> (CIBs) that allow your Holographic Screen to resolve higher-dimensional moral data. We're upgrading your perceptual resolution.
+            </div>
+
+            <div class="reading-connection">
+                Review Part III (pages 4-5) for the Holographic Screen, signal vs. noise, and the literacy of ethics.
+            </div>
+
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Check Your Understanding</div>
+                <p>Identify something you're "blind" to (music theory? Coding? Social cues?). What CIBs would you need to install to "see" it?</p>
+                <textarea id="checkpoint3" aria-label="Your blindness analysis" placeholder="Analyze what you cannot currently perceive..."></textarea>
+            </div>
+
+            <div class="navigation">
+                <button onclick="prevModule()">← Previous</button>
+                <button onclick="nextModule()" class="primary">Next: Identity Kernel →</button>
+            </div>
+        </section>
+
+        <!-- Module 4: Identity Kernel -->
+        <section class="module" id="module4" role="region" aria-labelledby="module4-title">
+            <h2 id="module4-title">Part IV: The Identity Kernel</h2>
+            
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Understand the Identity Kernel as your "source code"—the hierarchical sum of all your CIBs—and how it gets hardened through synaptic pruning, making change metabolically expensive.
+            </div>
+
+            <p>The sum total of your CIBs is your <strong>Identity Kernel</strong>. This is the "Source Code" of the Self. It has three hierarchical layers:</p>
+
+            <div class="interactive-section kernel-layers" role="application" aria-label="Identity kernel builder">
+                <div class="kernel-layer ethical">
+                    <h4>3. ETHICAL LAYER (Top - Abstract)</h4>
+                    <p style="margin-bottom: 10px;">Abstract values like justice, truth, human rights. Guides long-term cooperation.</p>
+                    <div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Justice</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Fairness</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Truth</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Compassion</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Rights</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-light);"><strong>Failure Mode:</strong> Moral Injury ("I've lost my purpose")</p>
+                </div>
+
+                <div class="kernel-layer social">
+                    <h4>2. SOCIAL LAYER (Middle - Relational)</h4>
+                    <p style="margin-bottom: 10px;">Roles, norms, tribal identity. Defines place in coordination networks.</p>
+                    <div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Teacher</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Parent</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Employee</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Friend</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Citizen</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-light);"><strong>Failure Mode:</strong> Alienation ("I don't fit in")</p>
+                </div>
+
+                <div class="kernel-layer somatic">
+                    <h4>1. SOMATIC LAYER (Base - Biological)</h4>
+                    <p style="margin-bottom: 10px;">Bio-electric patterns, body plan, hunger, pain. Maintains homeostasis.</p>
+                    <div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Body Plan</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Hunger</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Pain</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Breathing</div>
+                        <div class="cib-chip" onclick="toggleCIB(this)">Homeostasis</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-light);"><strong>Failure Mode:</strong> Physical Illness/Death</p>
+                </div>
+
+                <p style="margin-top: 20px; text-align: center;"><em>Click CIBs above to select them and see your active kernel</em></p>
+            </div>
+
+            <h3>Synaptic Pruning: Hardening the Kernel</h3>
+
+            <p>In adolescence, your brain undergoes <strong>Synaptic Pruning</strong>—deleting billions of unused connections to optimize the CIBs used most often. This is "hardening the screen." You specialize.</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                <div style="background: #fed7d7; padding: 15px; border-radius: 8px;">
+                    <strong>War Zone Environment:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Prune away "Trust" CIBs</li>
+                        <li>Reinforce "Vigilance" CIBs</li>
+                        <li>Optimize for threat detection</li>
+                    </ul>
+                </div>
+
+                <div style="background: #c6f6d5; padding: 15px; border-radius: 8px;">
+                    <strong>High-Trust Democracy:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Reinforce "Contract" CIBs</li>
+                        <li>Strengthen "Cooperation" CIBs</li>
+                        <li>Optimize for collaboration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p><strong>The Trade-off:</strong> Pruning makes you efficient but <strong>rigid</strong>. Changing your kernel later is <em>metabolically expensive</em>. This is why your father-in-law won't switch to a new smartphone—it's not stubbornness, it's <strong>thermodynamic rigidity</strong>.</p>
+
+            <h3>Identity Fracture (DID)</h3>
+
+            <p>In extreme cases, if the environment is too chaotic (severe trauma), the BROA+ cannot maintain a single coherent kernel. The metabolic cost of integration is too high.</p>
+
+            <p>To survive, the kernel may <strong>fracture</strong> into multiple sub-kernels (Dissociative Identity Disorder). Different "alters" hold different CIB sets to compartmentalize entropy. This proves: <strong>The "Self" is not a given. It's a thermodynamic achievement.</strong></p>
+
+            <div class="reading-connection">
+                Review Part IV (pages 5-6) for the Identity Kernel layers, synaptic pruning, and identity fracture.
+            </div>
+
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Check Your Understanding</div>
+                <p>Map your own Identity Kernel. What are your somatic, social, and ethical CIBs? Which layer feels most vulnerable to entropy?</p>
+                <textarea id="checkpoint4" aria-label="Your kernel mapping" placeholder="Map your three-layer Identity Kernel..."></textarea>
+            </div>
+
+            <div class="navigation">
+                <button onclick="prevModule()">← Previous</button>
+                <button onclick="nextModule()" class="primary">Next: Moral Injury →</button>
+            </div>
+        </section>
+
+        <!-- Module 5: Moral Injury & PRF -->
+        <section class="module" id="module5" role="region" aria-labelledby="module5-title">
+            <h2 id="module5-title">Part V: CIB Fragility & Personal Reference Frames</h2>
+            
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Understand moral injury as CIB shattering under decoherence pressure, and how Personal Reference Frames (PRFs) allow functional pluralism.
+            </div>
+
+            <h3>The Vulnerability of the CIB</h3>
+
+            <p>Because CIBs are the <strong>load-bearing walls</strong> of your identity, they are the primary sites of fragility. When a CIB is threatened—by betrayal, chronic stress, institutional breakdown—you experience profound disorientation.</p>
+
+            <div class="interactive-section moral-injury-demo" role="application" aria-label="Moral injury demonstration">
+                <h4>Interactive: Decoherence Pressure on a CIB</h4>
+                <p>Watch what happens as stress increases on a core ethical CIB:</p>
+
+                <div class="stress-meter">
+                    <label for="stressSlider">Decoherence Pressure (Stress Level):</label>
+                    <input type="range" id="stressSlider" min="0" max="100" value="0" 
+                           oninput="updateMoralInjury(this.value)" 
+                           style="width: 100%; margin: 10px 0;"
+                           aria-label="Stress level slider">
+                    <div class="stress-bar">
+                        <div class="stress-fill" id="stressFill" style="width: 0%; background: linear-gradient(90deg, #48bb78, #f56565);"></div>
+                    </div>
+                </div>
+
+                <div id="cibIntegrity" class="cib-integrity cib-intact">
+                    <h4 style="margin-bottom: 10px;">Core CIB: "I am a protector. I help people."</h4>
+                    <div id="integrityDesc">
+                        <strong>Status:</strong> Intact and coherent. The CIB is stable, filtering reality effectively.
+                    </div>
+                </div>
+
+                <div id="moralInjuryFeedback" style="margin-top: 15px; padding: 15px; background: #e6fffa; border-radius: 8px; display: none;">
+                    <strong>What's Happening:</strong>
+                    <p style="margin-top: 8px;" id="moralInjuryText"></p>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-title">Moral Injury</div>
+                This occurs when a core Ethical CIB is violated (e.g., soldier forced to harm civilians, nurse unable to provide care). The CIB "cracks." The agent experiences identity confusion, emotional collapse, and loss of ability to filter reality coherently. <strong>The CIB is both anchor and point of vulnerability.</strong>
+            </div>
+
+            <h3>The Personal Reference Frame (PRF)</h3>
+
+            <p>Two agents can have similar CIBs but <strong>interpret them differently</strong>. This is the Personal Reference Frame (PRF)—the story around the CIB.</p>
+
+            <div class="prf-comparison">
+                <div class="prf-card">
+                    <h4>🙏 Religious Agent</h4>
+                    <div class="same-function">
+                        <strong>Same CIB:</strong> Compassion
+                    </div>
+                    <div class="different-frame">
+                        <strong>Different PRF:</strong> Experiences it as divine command from God. "Love thy neighbor."
+                    </div>
+                </div>
+
+                <div class="prf-card">
+                    <h4>🧬 Secular Agent</h4>
+                    <div class="same-function">
+                        <strong>Same CIB:</strong> Compassion
+                    </div>
+                    <div class="different-frame">
+                        <strong>Different PRF:</strong> Experiences it as evolutionary adaptation. "Altruism increases group fitness."
+                    </div>
+                </div>
+
+                <div class="prf-card">
+                    <h4>🌍 Indigenous Agent</h4>
+                    <div class="same-function">
+                        <strong>Same CIB:</strong> Compassion
+                    </div>
+                    <div class="different-frame">
+                        <strong>Different PRF:</strong> Experiences it as relational duty to land and all beings. "All my relations."
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-title">Functional Pluralism</div>
+                The <strong>function</strong> is the same (cooperation, non-violence). The <strong>interpretive frame</strong> varies. We don't need everyone to share the same metaphysics (God vs. Evolution). We need them to share the same <strong>functional CIBs</strong> (Stag Hunting, Cooperation).
+            </div>
+
+            <div class="reading-connection">
+                Review Part V (pages 4-6) for CIB vulnerability, moral injury, and Personal Reference Frames.
+            </div>
+
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Check Your Understanding</div>
+                <p>Have you experienced moral injury (or witnessed it)? Describe the CIB that cracked and what decoherence pressure caused it.</p>
+                <textarea id="checkpoint5" aria-label="Your moral injury analysis" placeholder="Reflect on CIB fragility..."></textarea>
+            </div>
+
+            <div class="navigation">
+                <button onclick="prevModule()">← Previous</button>
+                <button onclick="nextModule()" class="primary">Next: Synthesis →</button>
+            </div>
+        </section>
+
+        <!-- Module 6: Synthesis -->
+        <section class="module" id="module6" role="region" aria-labelledby="module6-title">
+            <h2 id="module6-title">Conclusion: The Responsibility of Resolution</h2>
+            
+            <div class="learning-objective" role="note">
+                <strong>Learning Objective:</strong> Synthesize the Physics of the Self into three actionable mandates for ethical development as conscious architecture of your thermodynamic achievement.
+            </div>
+
+            <p>The Physics of the Self fundamentally changes ethical development. It shifts focus from <strong>"Willpower"</strong> to <strong>"Architecture"</strong>.</p>
+
+            <h3>The Three Mandates</h3>
+
+            <div style="display: grid; gap: 20px; margin: 30px 0;">
+                <div style="background: #c6f6d5; padding: 20px; border-radius: 8px; border-left: 4px solid var(--success);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">1. CODE ACQUISITION (CIB Installation)</h4>
+                    <p>Actively acquire new CIBs. Learning ethical concepts is not abstract—it's <strong>installing the code</strong> that allows your Holographic Screen to render existing suffering.</p>
+                    <p style="margin-top: 10px;"><strong>Action:</strong> Seek out new perspectives, study marginalized voices, learn frameworks you don't currently have. Expand your perceptual resolution.</p>
+                </div>
+
+                <div style="background: #fef5e7; padding: 20px; border-radius: 8px; border-left: 4px solid var(--warning);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">2. SCREEN CALIBRATION (Humility)</h4>
+                    <p>Recognize that your current view of reality is a <strong>low-resolution simulation</strong> filtered by your past CIBs. You have blind spots you don't even know are there.</p>
+                    <p style="margin-top: 10px;"><strong>Action:</strong> When someone says "you don't understand," believe them. Your screen might not be rendering what they see. Ask what CIBs you're missing.</p>
+                </div>
+
+                <div style="background: #faf5ff; padding: 20px; border-radius: 8px; border-left: 4px solid var(--purple);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">3. ACTIVE REPAIR (The BROA+ Mandate)</h4>
+                    <p>Maintain the <strong>metabolic energy</strong> (Sapolsky) required to keep your high-level CIBs online. It takes actual physical energy (glucose) to be ethical.</p>
+                    <p style="margin-top: 10px;"><strong>Action:</strong> Sleep, nutrition, stress management aren't luxuries—they're <strong>prerequisites for ethical functioning</strong>. When your PFC is depleted, you regress to lower-entropy states.</p>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-title">The Ethical Life as Thermodynamic Battle</div>
+                In the final analysis, the ethical life is a battle against the Second Law of Thermodynamics. It is the constant, high-energy work of maintaining <strong>high-depth Coherent Information Bits</strong> in a universe that wants to dissolve them into noise.
+            </div>
+
+            <h3>From Classes 1-5: The Complete Picture</h3>
+
+            <ol style="line-height: 2; margin: 20px 0 20px 30px;">
+                <li><strong>Class 1:</strong> Systems create outcomes (Schelling) → Architecture matters</li>
+                <li><strong>Class 2:</strong> Brain is biological hardware (Sapolsky) → Metabolic costs are real</li>
+                <li><strong>Class 3:</strong> Social software enables cooperation (Stag Hunt) → Trust requires assurance</li>
+                <li><strong>Class 4:</strong> Operating systems patch the hardware (Li, Garden, WEIRD) → Culture downloads CIBs</li>
+                <li><strong>Class 5:</strong> Physics of agency (BROA+/CIB) → <strong>You are the architect of your thermodynamic achievement</strong></li>
+            </ol>
+
+            <div class="reading-connection">
+                Review the Conclusion (page 7) and Data Appendix (pages 7-8) for the complete synthesis and the three-layer table of the Identity Kernel.
+            </div>
+
+            <h3>Final Reflection</h3>
+
+            <div class="checkpoint">
+                <div class="checkpoint-title">✓ Synthesis Challenge</div>
+                <p>Apply all three mandates to your own life:</p>
+                <ol style="margin: 15px 0 15px 20px;">
+                    <li><strong>Code Acquisition:</strong> What CIB do you need to install to see an ethical issue you're currently blind to?</li>
+                    <li><strong>Screen Calibration:</strong> What blind spot might you have? Who sees something you don't?</li>
+                    <li><strong>Active Repair:</strong> What metabolic maintenance do you need to keep your high-level CIBs online?</li>
+                </ol>
+                <textarea id="checkpointFinal" aria-label="Your synthesis" placeholder="Apply the three mandates..." style="min-height: 150px;"></textarea>
+            </div>
+
+            <div style="background: #c6f6d5; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center;">
+                <h3 style="margin-bottom: 10px;">🎓 Module Complete!</h3>
+                <p>You've completed The Physics of the Self module. You now understand:</p>
+                <ul style="text-align: left; margin: 10px auto; max-width: 600px;">
+                    <li>You are a BROA+ fighting entropy through constant self-repair</li>
+                    <li>CIBs are the fundamental units of your agency (physical + phenomenological)</li>
+                    <li>Your Holographic Screen filters reality based on installed CIBs</li>
+                    <li>The Identity Kernel has three layers that can crack under stress</li>
+                    <li>Ethical development is architecture, not willpower</li>
+                </ul>
+                <button onclick="downloadResponses()" class="success" style="margin-top: 15px;">
+                    📥 Download Your Responses
+                </button>
+            </div>
+
+            <div class="navigation">
+                <button onclick="prevModule()">← Previous</button>
+                <button onclick="location.reload()" class="primary">↻ Start Over</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // State management
+        let currentModule = 0;
+        const totalModules = 7;
+        let coherenceLevel = 70;
+
+        // Progress tracking
+        function updateProgress() {
+            const progress = Math.round((currentModule / totalModules) * 100);
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = progress + '%';
+            progressFill.textContent = progress + '%';
+            progressFill.setAttribute('aria-valuenow', progress);
+
+            const completed = document.getElementById('completedModules');
+            const moduleNames = [
+                'Introduction', 'BROA+ & Entropy', 'The CIB',
+                'Holographic Screen', 'Identity Kernel', 'Moral Injury & PRF', 'Synthesis'
+            ];
+            
+            let html = '';
+            for (let i = 0; i < currentModule; i++) {
+                html += `<span class="completed-module">✓ ${moduleNames[i]}</span>`;
+            }
+            completed.innerHTML = html;
+        }
+
+        // Navigation
+        function nextModule() {
+            document.getElementById(`module${currentModule}`).classList.remove('active');
+            currentModule++;
+            if (currentModule < totalModules) {
+                document.getElementById(`module${currentModule}`).classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevModule() {
+            if (currentModule > 0) {
+                document.getElementById(`module${currentModule}`).classList.remove('active');
+                currentModule--;
+                document.getElementById(`module${currentModule}`).classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Entropy particles
+        function createParticles() {
+            const orderedContainer = document.getElementById('orderedParticles');
+            const chaoticContainer = document.getElementById('chaoticParticles');
+            
+            // Ordered particles in grid
+            for (let i = 0; i < 9; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle ordered';
+                const row = Math.floor(i / 3);
+                const col = i % 3;
+                particle.style.left = (col * 40 + 20) + '%';
+                particle.style.top = (row * 40 + 20) + '%';
+                orderedContainer.appendChild(particle);
+            }
+
+            // Chaotic particles random
+            for (let i = 0; i < 9; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle chaotic';
+                particle.style.left = Math.random() * 90 + '%';
+                particle.style.top = Math.random() * 90 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                chaoticContainer.appendChild(particle);
+            }
+        }
+
+        // Repair choice
+        function makeRepairChoice(type) {
+            const fill = document.getElementById('coherenceFill');
+            const desc = document.getElementById('coherenceDesc');
+
+            if (type === 'good') {
+                coherenceLevel = Math.min(100, coherenceLevel + 10);
+                desc.innerHTML = '✅ <strong>Good repair action!</strong> You chose high-quality information. Your structure maintains coherence against entropy.';
+            } else {
+                coherenceLevel = Math.max(0, coherenceLevel - 15);
+                desc.innerHTML = '⚠️ <strong>Entropic event.</strong> You chose low-quality information. Your structure is degrading. More repair actions needed.';
+            }
+
+            fill.style.width = coherenceLevel + '%';
+            fill.textContent = coherenceLevel + '% Coherent';
+
+            if (coherenceLevel > 70) {
+                fill.style.background = 'linear-gradient(90deg, #48bb78, #38a169)';
+            } else if (coherenceLevel > 40) {
+                fill.style.background = 'linear-gradient(90deg, #ed8936, #dd6b20)';
+            } else {
+                fill.style.background = 'linear-gradient(90deg, #f56565, #e53e3e)';
+            }
+        }
+
+        // Build CIB
+        function buildCIB() {
+            const past = document.getElementById('pastLayer').value.trim();
+            const present = document.getElementById('presentLayer').value.trim();
+            const future = document.getElementById('futureLayer').value.trim();
+
+            if (!past || !present || !future) {
+                alert('Please fill in all three temporal layers to build a complete CIB.');
+                return;
+            }
+
+            const viz = document.getElementById('cibVisualization');
+            document.getElementById('cibTitle').textContent = '"Being a Doctor"'; // Example
+            document.getElementById('cibPast').textContent = past;
+            document.getElementById('cibPresent').textContent = present;
+            document.getElementById('cibFuture').textContent = future;
+
+            viz.style.display = 'block';
+        }
+
+        // Toggle CIB chips
+        function toggleCIB(element) {
+            element.classList.toggle('selected');
+        }
+
+        // Moral injury slider
+        function updateMoralInjury(value) {
+            const fill = document.getElementById('stressFill');
+            const integrity = document.getElementById('cibIntegrity');
+            const desc = document.getElementById('integrityDesc');
+            const feedback = document.getElementById('moralInjuryFeedback');
+            const feedbackText = document.getElementById('moralInjuryText');
+
+            fill.style.width = value + '%';
+            fill.textContent = value + '% Stress';
+
+            if (value < 40) {
+                integrity.className = 'cib-integrity cib-intact';
+                desc.innerHTML = '<strong>Status:</strong> Intact and coherent. The CIB is stable, filtering reality effectively.';
+                feedback.style.display = 'none';
+            } else if (value < 70) {
+                integrity.className = 'cib-integrity cib-cracking';
+                desc.innerHTML = '<strong>Status:</strong> Under decoherence pressure. Cracks forming. Identity confusion beginning. "Am I still a protector if I can\'t protect?"';
+                feedback.style.display = 'block';
+                feedbackText.textContent = 'Moderate stress is threatening the CIB. The metabolic cost of maintaining coherence is increasing. The agent experiences doubt, cognitive dissonance, anxiety.';
+            } else {
+                integrity.className = 'cib-integrity cib-shattered';
+                desc.innerHTML = '<strong>Status:</strong> SHATTERED. Moral injury complete. The agent can no longer filter reality through this CIB. Identity collapse. "I don\'t know who I am anymore."';
+                feedback.style.display = 'block';
+                feedbackText.textContent = 'The CIB has fractured under extreme decoherence pressure. This is moral injury. The load-bearing wall of identity has collapsed. The agent loses ability to maintain coherence.';
+            }
+        }
+
+        // Download responses
+        function downloadResponses() {
+            const checkpoints = [
+                'checkpoint0', 'checkpoint1', 'checkpoint2', 
+                'checkpoint3', 'checkpoint4', 'checkpoint5', 'checkpointFinal'
+            ];
+            
+            const labels = [
+                'Introduction: Process vs. Thing',
+                'Module 1: BROA+ and Entropy',
+                'Module 2: The CIB Anatomy',
+                'Module 3: Holographic Screen',
+                'Module 4: Identity Kernel',
+                'Module 5: Moral Injury & PRF',
+                'Final Synthesis: Three Mandates'
+            ];
+            
+            let content = 'THE PHYSICS OF THE SELF - LEARNING RESPONSES\n';
+            content += '='.repeat(60) + '\n\n';
+            
+            checkpoints.forEach((id, i) => {
+                const textarea = document.getElementById(id);
+                if (textarea && textarea.value.trim()) {
+                    content += labels[i] + '\n';
+                    content += '-'.repeat(60) + '\n';
+                    content += textarea.value.trim() + '\n\n';
+                }
+            });
+
+            // Add coherence level
+            content += 'COHERENCE TRACKING\n';
+            content += '-'.repeat(60) + '\n';
+            content += `Final Coherence Level: ${coherenceLevel}%\n\n`;
+            
+            content += '\nCompleted: ' + new Date().toLocaleString();
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'physics_of_self_responses.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            updateProgress();
+            createParticles();
+            document.querySelector('h1').focus();
+        });
+    </script>
 </body>
 </html>
